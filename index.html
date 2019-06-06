@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Where are all the Onesies?</title>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js"></script>
+    <link rel="stylesheet" href="index.css" />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/emoji.css/dist/emoji.min.css"
+    />
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      mapboxgl.accessToken =
+        'pk.eyJ1IjoiZmx4d3UiLCJhIjoiY2pucWIxenh3MDBlYzNxa3l4NThsd3AwNiJ9.xRXLfJfu0uVxtHrj7CFyOw';
+      const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/satellite-streets-v9',
+        center: [10.5, 51.17],
+        zoom: 3
+      });
+      map.addControl(new mapboxgl.NavigationControl());
+      var geojson = {
+        type: 'FeatureCollection',
+        features: [
+          {
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: [-122.414, 37.776]
+            },
+            properties: {
+              name: 'Dominik',
+              place: 'San Francisco, California',
+              conference: '',
+              emoji: 'panda-face'
+            }
+          }
+        ]
+      };
+      geojson.features.forEach(function(marker) {
+        // create a HTML element for each feature
+        const props = marker.properties;
+        const el = document.createElement('span');
+        el.className = `marker emoji ec ec-${props.emoji}`;
+
+        // make a marker for each feature and add to the map
+        new mapboxgl.Marker(el)
+          .setLngLat(marker.geometry.coordinates)
+          .setPopup(
+            new mapboxgl.Popup({ offset: 25 }) // add popups
+              .setHTML(
+                `<h3>${props.name}</h3>
+								<p>Currently in ${props.place} ${
+                  props.conference.length > 0 ? 'at ' + props.conference : ''
+                }</p>`
+              )
+          )
+          .addTo(map);
+      });
+    </script>
+  </body>
+</html>
