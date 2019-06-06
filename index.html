@@ -25,7 +25,7 @@
         container: 'map',
         style: 'mapbox://styles/mapbox/satellite-streets-v9',
         center: [10.5, 51.17],
-        zoom: 3
+        zoom: 1.5
       });
       map.addControl(new mapboxgl.NavigationControl());
       var geojson = {
@@ -43,7 +43,33 @@
               conference: '',
               emoji: 'panda-face'
             }
-          }
+          },
+          {
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: [13.41053, 52.52437]
+            },
+            properties: {
+              name: 'Felix',
+              place: 'Berlin, Germany',
+              conference: 'WeAreDevelopers',
+              emoji: 'wolf'
+            }
+          },
+          {
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: [103.8198, 1.3521]
+            },
+            properties: {
+              name: 'Flaki',
+              place: 'Singapore',
+              conference: '',
+              emoji: 'fox-face'
+            }
+          },
         ]
       };
       geojson.features.forEach(function(marker) {
